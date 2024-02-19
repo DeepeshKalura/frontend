@@ -1,30 +1,30 @@
-import 'dart:math' as math;
 import 'dart:convert';
+import 'dart:math';
 import 'package:http/http.dart' as http;
+import '../model/user.dart' as model;
 
 class UserController {
   final String baseUrl = "https://text-to-speech-uajn.onrender.com";
 
-  // Later I will add different types of method to handle the user data
-  Future<void> signInUser(String username) async {
+  Future<model.User> signInUser(String username) async {
     String url = "$baseUrl/v1/cup/users/";
     var data = {
       "name": username,
-      "token": math.Random().nextInt(100000).toString(),
+      "token": Random().nextInt(100000).toString(),
       "pyq_score": "23.45",
     };
-    var response = await http.post(Uri.parse(url), body: jsonEncode(data));
+    var headers = {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+    };
+    var response = await http.post(Uri.parse(url),
+        body: jsonEncode(data), headers: headers);
+
     if (response.statusCode == 201) {
-      print("User signed in successfully");
-      print(response.body);
+      model.User user = model.User.fromJson(response.body);
+      return user;
     } else {
-      print("Failed to sign in user");
-      print(response.body);
+      throw Exception("Failed to sign in user");
     }
   }
-}
-
-void main(List<String> args) {
-  UserController userController = UserController();
-  userController.signInUser("John Doe");
 }
