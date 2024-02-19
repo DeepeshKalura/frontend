@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:healix_frontend/model/user.dart';
+
+import 'view/login_view.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,31 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const LoginView(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key, required this.user});
+  final User user;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home Screen'),
+      ),
+      drawer: const Drawer(
+        backgroundColor: Colors.amber,
+      ),
+      body: const Column(
+        children: [
+          Center(
+            child: Text('Home Screen'),
+          ),
+        ],
+      ),
     );
   }
 }
