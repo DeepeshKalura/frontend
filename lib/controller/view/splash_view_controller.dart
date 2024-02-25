@@ -8,8 +8,7 @@ import '../user_controller.dart';
 
 class SplashViewController {
   var userController = UserController();
-  static var sharedPreferencesController =
-      SharedPreferencesController.getInstance();
+  var sharedPreferencesController = SharedPreferencesController();
   SplashViewController();
 
   late String userId;
@@ -21,6 +20,7 @@ class SplashViewController {
 
   Future<bool> checkUser() async {
     var id = await sharedPreferencesController.getString("id");
+    print(id); // why there is null i wonder ?
     if (id == null) {
       return false;
     } else {
@@ -34,9 +34,7 @@ class SplashViewController {
       var user = await getUser();
       return HomeScreen(user: user);
     } else {
-      return AnyomousView(
-        sharedPreferencesController: sharedPreferencesController,
-      );
+      return const AnyomousView();
     }
   }
 }

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:healix_frontend/view/home_view.dart';
 
-import '../controller/shared_preference_controller.dart';
 import '../controller/view/anyomous_view_controller.dart';
 import '../model/user.dart';
 
 class AnyomousView extends StatefulWidget {
-  const AnyomousView({super.key, required this.sharedPreferencesController});
-  final SharedPreferencesController sharedPreferencesController;
+  const AnyomousView({super.key});
 
   @override
   State<AnyomousView> createState() => _AnyomousViewState();
@@ -32,10 +30,11 @@ class _AnyomousViewState extends State<AnyomousView> {
     );
   }
 
+  bool isLogin = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size.width;
-    return anyomousViewController.isLogin
+    return isLogin
         ? const Scaffold(
             body: Center(
               child: CircularProgressIndicator(
@@ -91,8 +90,12 @@ class _AnyomousViewState extends State<AnyomousView> {
                               ),
                             ),
                             onPressed: () async {
+                              setState(() {
+                                isLogin = true;
+                              });
                               var user = await anyomousViewController
                                   .createUser(nameController.text);
+                              isLogin = false;
                               navigateToHomeScreen(context, user);
                             },
                             child: const Text(

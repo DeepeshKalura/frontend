@@ -11,7 +11,7 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
-  var sharedPreferencesController = SharedPreferencesController.getInstance();
+  var sharedPreferencesController = SharedPreferencesController();
   var splashViewController = SplashViewController();
   Future<void> _redirectedToNextScreen() async {
     var nextScreen = await splashViewController.navigateToAppropriateScreen();

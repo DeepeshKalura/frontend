@@ -6,9 +6,9 @@ import '../model/user.dart' as model;
 
 class UserController {
   // final String baseUrl = "https://text-to-speech-uajn.onrender.com";
-  final String baseUrl = "http://127.0.0.1:8000";
+  final String baseUrl = "http://0.0.0.0:8000";
 
-  Future<dynamic> signInUser(String username) async {
+  Future<model.User> signInUser(String username) async {
     String url = "$baseUrl/v1/convex/users/";
     var data = {
       "name": username,
