@@ -1,17 +1,10 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPreferencesController {
-  static SharedPreferences? _sharedPreferences;
-  static SharedPreferencesController? _instance;
+  SharedPreferences? _sharedPreferences;
 
-  SharedPreferencesController._();
-
-  static SharedPreferencesController getInstance() {
-    if (_instance == null) {
-      _instance = SharedPreferencesController._();
-      _instance!._init();
-    }
-    return _instance!;
+  SharedPreferencesController() {
+    _init();
   }
 
   void _init() async {
@@ -19,10 +12,12 @@ class SharedPreferencesController {
   }
 
   Future<void> setString(String key, String value) async {
-    await _sharedPreferences?.setString(key, value);
+    _sharedPreferences ??= await SharedPreferences.getInstance();
+    _sharedPreferences!.setString(key, value);
   }
 
   Future<String?> getString(String key) async {
-    return _sharedPreferences?.getString(key);
+    _sharedPreferences ??= await SharedPreferences.getInstance();
+    return _sharedPreferences!.getString(key);
   }
 }
